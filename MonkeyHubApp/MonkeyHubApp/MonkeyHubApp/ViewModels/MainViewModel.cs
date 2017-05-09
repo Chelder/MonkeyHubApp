@@ -12,6 +12,11 @@ namespace MonkeyHubApp.ViewModels
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
+        protected virtual void OnPropertyChanged([CallerMemberName]string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
         private string _descricao;
         public string Descricao
         {
@@ -19,9 +24,20 @@ namespace MonkeyHubApp.ViewModels
             set
             {
                 _descricao = value;
-                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Descricao)));
+                OnPropertyChanged();
             }
         }
+
+        private string _nome;
+
+        public string Nome
+        {
+            get { return _nome; }
+            set { _nome = value;
+                OnPropertyChanged();
+            }
+        }
+
 
         public MainViewModel()
         {
