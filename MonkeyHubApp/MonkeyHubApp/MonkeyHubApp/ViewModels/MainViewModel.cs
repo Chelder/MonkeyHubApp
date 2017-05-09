@@ -21,10 +21,7 @@ namespace MonkeyHubApp.ViewModels
             Task.Delay(3000).ContinueWith(t =>
             {
                 Descricao = "Meu texto Mudou";
-                if (PropertyChanged != null)
-                {
-                    PropertyChanged.Invoke(this, new PropertyChangedEventArgs("Descricao"));
-                }
+                    PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Descricao)));
             });
         }
     }
