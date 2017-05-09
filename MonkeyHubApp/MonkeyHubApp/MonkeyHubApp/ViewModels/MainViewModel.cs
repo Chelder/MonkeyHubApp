@@ -17,28 +17,29 @@ namespace MonkeyHubApp.ViewModels
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        protected bool SetProperty<T>(ref T storage, T value, [CallerMemberName]string propertyName = null)
+        {
+            if (EqualityComparer<T>.Default.Equals(storage, value))
+            {
+                return false;
+            }
+
+            storage = value;
+            OnPropertyChanged(propertyName);
+
+            return true;
+        }
+
         private string _descricao;
         public string Descricao
         {
             get { return _descricao; }
             set
             {
-                _descricao = value;
-                OnPropertyChanged();
+                SetProperty(ref _descricao, value);
             }
         }
-
-        private string _nome;
-
-        public string Nome
-        {
-            get { return _nome; }
-            set { _nome = value;
-                OnPropertyChanged();
-            }
-        }
-
-
+        
         public MainViewModel()
         {
             Descricao = "Ola mundo! Eu estou aqui!";
