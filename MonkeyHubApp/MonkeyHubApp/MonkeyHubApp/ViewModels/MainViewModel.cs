@@ -1,26 +1,41 @@
-﻿using System.Threading.Tasks;
+﻿
+using System;
+using System.Diagnostics;
+using Xamarin.Forms;
 
 namespace MonkeyHubApp.ViewModels
 {
     public class MainViewModel : BaseViewModel
     {
+        private string _searchTerm;
 
-
-        private string _descricao;
-        public string Descricao
+        public string SearchTerm
         {
-            get { return _descricao; }
-            set { SetProperty(ref _descricao, value); }
+            get { return _searchTerm; }
+            set
+            {
+                if (SetProperty(ref _searchTerm, value))
+                {
+                    SearhCommand.ChangeCanExecute();
+                }
+            }
         }
+
+        public Command SearhCommand { get; }
 
         public MainViewModel()
         {
-            Descricao = "Ola mundo! Eu estou aqui!";
+            SearhCommand = new Command(ExecuteSearchCommand, CanExecuteSearchCommand);
+        }
 
-            Task.Delay(3000).ContinueWith(t =>
-            {
-                Descricao = "Meu texto Mudou";
-            });
+        private bool CanExecuteSearchCommand()
+        {
+            return !string.IsNullOrWhiteSpace(SearchTerm);
+        }
+
+        void ExecuteSearchCommand()
+        {
+            Debug.WriteLine($"Clicou no botão! {DateTime.Now}");
         }
     }
 }
