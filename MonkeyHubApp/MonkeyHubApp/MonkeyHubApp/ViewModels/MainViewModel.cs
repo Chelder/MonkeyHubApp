@@ -1,6 +1,7 @@
 ﻿
 using System;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace MonkeyHubApp.ViewModels
@@ -28,14 +29,27 @@ namespace MonkeyHubApp.ViewModels
             SearhCommand = new Command(ExecuteSearchCommand, CanExecuteSearchCommand);
         }
 
+        async void ExecuteSearchCommand()
+        {
+            await Task.Delay(2000);
+
+            //Forma errada de utilizar o DisplayAlert
+            bool res = await App.Current.MainPage.DisplayAlert("MonkeyHubApp", $"Você pesquisou por '{SearchTerm}'?", "Sim", "Não");
+
+            if (res)
+            {
+                //Forma errada de utilizar o DisplayAlert
+                await App.Current.MainPage.DisplayAlert("MonkeyHubApp", "Obrigado", "Ok");
+            } else
+            {
+                //Forma errada de utilizar o DisplayAlert
+                await App.Current.MainPage.DisplayAlert("MonkeyHubApp", "De nada", "Ok");
+            }
+        }
+
         private bool CanExecuteSearchCommand()
         {
             return !string.IsNullOrWhiteSpace(SearchTerm);
-        }
-
-        void ExecuteSearchCommand()
-        {
-            Debug.WriteLine($"Clicou no botão! {DateTime.Now}");
         }
     }
 }
