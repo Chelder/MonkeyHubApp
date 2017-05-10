@@ -5,7 +5,8 @@
              x:Class="MonkeyHubApp.MainPage">
 
     <StackLayout>
-        <Entry Text="{Binding SearchTerm}"></Entry>
+        <Entry Text="{Binding SearchTerm}" />
+        <ListView ItemsSource="{Binding Resultados}" />
         <Button Text="Pesquisar" Command="{Binding SearhCommand}" /> 
     </StackLayout>
 
