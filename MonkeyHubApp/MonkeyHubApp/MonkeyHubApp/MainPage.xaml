@@ -6,8 +6,14 @@
 
     <StackLayout>
         <Entry Text="{Binding SearchTerm}" />
-        <ListView ItemsSource="{Binding Resultados}" />
-        <Button Text="Pesquisar" Command="{Binding SearhCommand}" /> 
+        <Button Text="Pesquisar" Command="{Binding SearhCommand}" />
+        <ListView ItemsSource="{Binding Resultados}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextCell Text="{Binding Name}" Detail="{Binding Description}" />
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
     </StackLayout>
 
 </ContentPage>
