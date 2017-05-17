@@ -8,6 +8,7 @@ using System.Net.Http.Headers;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using MonkeyHubApp.Model;
+using System;
 
 namespace MonkeyHubApp.ViewModels
 {
@@ -51,12 +52,20 @@ namespace MonkeyHubApp.ViewModels
         public ObservableCollection<Tag> Resultados { get; }
 
         public Command SearhCommand { get; }
+        public Command AboutCommand { get; }
 
         public MainViewModel()
         {
             SearhCommand = new Command(ExecuteSearchCommand, CanExecuteSearchCommand);
 
+            AboutCommand = new Command(ExecuteAboutCommand);
+
             Resultados = new ObservableCollection<Tag>();
+        }
+
+        async void ExecuteAboutCommand()
+        {
+            await PushAsync<AboutViewModel>();
         }
 
         async void ExecuteSearchCommand()
