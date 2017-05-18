@@ -1,41 +1,15 @@
 ﻿
 using System.Collections.ObjectModel;
-using System.Threading.Tasks;
 using Xamarin.Forms;
-using System.IO;
 using System.Net.Http;
-using System.Net.Http.Headers;
-using Newtonsoft.Json;
-using System.Collections.Generic;
-using MonkeyHubApp.Model;
+using MonkeyHubApp.Services;
+using MonkeyHubApp.Models;
 using System;
 
 namespace MonkeyHubApp.ViewModels
 {
     public class MainViewModel : BaseViewModel
     {
-        private const string BaseUrl = "https://monkey-hub-api.azurewebsites.net/api/";
-
-        public async Task<List<Tag>> GetTagsAsync()
-        {
-            var httpClient = new HttpClient();
-            httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-            var response = await httpClient.GetAsync($"{BaseUrl}Tags").ConfigureAwait(false);
-
-            if (response.IsSuccessStatusCode)
-            {
-                using (var responseStream = await response.Content.ReadAsStreamAsync().ConfigureAwait(false))
-                {
-                    return JsonConvert.DeserializeObject<List<Tag>>(
-                        await new StreamReader(responseStream)
-                            .ReadToEndAsync().ConfigureAwait(false));
-                }
-            }
-
-            return null;
-        }
-
         private string _searchTerm;
         public string SearchTerm
         {
@@ -53,14 +27,26 @@ namespace MonkeyHubApp.ViewModels
 
         public Command SearhCommand { get; }
         public Command AboutCommand { get; }
+        public Command<Tag> ShowCategoriaCommand { get; }
 
-        public MainViewModel()
+        private readonly IMonkeyHubApiService _monkeyHubApiService;
+
+        public MainViewModel(IMonkeyHubApiService monkeyHubApiService)
         {
+            _monkeyHubApiService = monkeyHubApiService;
+
             SearhCommand = new Command(ExecuteSearchCommand, CanExecuteSearchCommand);
 
             AboutCommand = new Command(ExecuteAboutCommand);
 
+            ShowCategoriaCommand = new Command<Tag>(ExecuteShowCategoriaCommand);
+
             Resultados = new ObservableCollection<Tag>();
+        }
+
+        private async void ExecuteShowCategoriaCommand(Tag tag)
+        {
+            await PushAsync<CategoriaViewModel>(_monkeyHubApiService, tag);
         }
 
         async void ExecuteAboutCommand()
@@ -80,7 +66,7 @@ namespace MonkeyHubApp.ViewModels
                 //Forma errada de utilizar o DisplayAlert
                 await App.Current.MainPage.DisplayAlert("MonkeyHubApp", "Obrigado", "Ok");
 
-                var tagsRetornadasDoServico = await GetTagsAsync();
+                var tagsRetornadasDoServico = await _monkeyHubApiService.GetTagsAsync();
 
                 Resultados.Clear();
 

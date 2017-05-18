@@ -1,4 +1,4 @@
-﻿namespace MonkeyHubApp.Model
+﻿namespace MonkeyHubApp.Models
 {
     public class Tag
     {
