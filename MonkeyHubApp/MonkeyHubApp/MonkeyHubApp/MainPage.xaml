@@ -5,22 +5,17 @@
              x:Class="MonkeyHubApp.MainPage"
              Title="Página Inicial">
 
-    <ContentPage.ToolbarItems>
-        <ToolbarItem Text="About" Command="{Binding AboutCommand}" />
-    </ContentPage.ToolbarItems>
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Color x:Key="minhaCor">Blue</Color>
+            <Font x:Key="minhaFonte">Large</Font>
+        </ResourceDictionary>        
+    </ContentPage.Resources>
     
     <StackLayout>
-        <Button Text="Tela Sobre" Command="{Binding AboutCommand}"/>
-        <Entry Text="{Binding SearchTerm}" />
-        <Button Text="Pesquisar" Command="{Binding SearhCommand}" />
-        
-        <ListView ItemsSource="{Binding Resultados}" ItemSelected="ListView_ItemSelected">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <TextCell Text="{Binding Name}" Detail="{Binding Description}" />
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+        <Label Text="Meu Texto 1" Font="{StaticResource minhaFonte}" TextColor="{StaticResource minhaCor}" />
+        <Label Text="Meu Texto 2" Font="{StaticResource minhaFonte}" TextColor="{StaticResource minhaCor}" />
+        <Label Text="Meu Texto 3" Font="{StaticResource minhaFonte}" TextColor="{StaticResource minhaCor}" />
+        <Label Text="Meu Texto 4" Font="{StaticResource minhaFonte}" TextColor="{StaticResource minhaCor}" />
     </StackLayout>
-
 </ContentPage>
