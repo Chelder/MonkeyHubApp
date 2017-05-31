@@ -9,6 +9,16 @@
         <ResourceDictionary>
             <Color x:Key="minhaCor">Blue</Color>
             <Font x:Key="minhaFonte">Large</Font>
+
+            <style x:Key="danger" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="Red" />
+                <Setter Property="Font" Value="{StaticResource minhaFonte}" />
+            </style>
+
+            <style x:Key="info" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="Blue" />
+                <Setter Property="Font" Value="Large" />
+            </style>
         </ResourceDictionary>        
     </ContentPage.Resources>
     
@@ -17,5 +27,11 @@
         <Label Text="Meu Texto 2" Font="{StaticResource minhaFonte}" TextColor="{StaticResource minhaCor}" />
         <Label Text="Meu Texto 3" Font="{StaticResource minhaFonte}" TextColor="{StaticResource minhaCor}" />
         <Label Text="Meu Texto 4" Font="{StaticResource minhaFonte}" TextColor="{StaticResource minhaCor}" />
+
+        <Button Text="Excluir" Style="{StaticResource danger}" />
+        <Button Text="Salvar" Style="{StaticResource info}" />
+
+        <Button Text="Remover Item" Style="{StaticResource danger}" />
+        <Button Text="Incluir Item" Style="{StaticResource info}" />
     </StackLayout>
 </ContentPage>
