@@ -5,23 +5,6 @@
              x:Class="MonkeyHubApp.MainPage"
              Title="Página Inicial">
 
-    <ContentPage.Resources>
-        <ResourceDictionary>
-            <Color x:Key="minhaCor">Blue</Color>
-            <Font x:Key="minhaFonte">Large</Font>
-
-            <style x:Key="danger" TargetType="Button">
-                <Setter Property="BackgroundColor" Value="Red" />
-                <Setter Property="Font" Value="{StaticResource minhaFonte}" />
-            </style>
-
-            <style x:Key="info" TargetType="Button">
-                <Setter Property="BackgroundColor" Value="Blue" />
-                <Setter Property="Font" Value="Large" />
-            </style>
-        </ResourceDictionary>        
-    </ContentPage.Resources>
-    
     <StackLayout>
         <Label Text="Meu Texto 1" Font="{StaticResource minhaFonte}" TextColor="{StaticResource minhaCor}" />
         <Label Text="Meu Texto 2" Font="{StaticResource minhaFonte}" TextColor="{StaticResource minhaCor}" />
@@ -33,5 +16,7 @@
 
         <Button Text="Remover Item" Style="{StaticResource danger}" />
         <Button Text="Incluir Item" Style="{StaticResource info}" />
+
+        <Button x:Name="btnNavegar" Text="Navegar" />
     </StackLayout>
 </ContentPage>

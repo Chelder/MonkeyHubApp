@@ -16,6 +16,11 @@ namespace MonkeyHubApp
         {
             InitializeComponent();
             BindingContext = new MainViewModel(new MonkeyHubApiService());
+
+            btnNavegar.Clicked += async (sender, e) =>
+            {
+                await Navigation.PushAsync(new CategoriaPage());
+            };
         }        
     }
 }
