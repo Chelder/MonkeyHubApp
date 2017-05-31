@@ -5,89 +5,54 @@ using System.Net.Http;
 using MonkeyHubApp.Services;
 using MonkeyHubApp.Models;
 using System;
+using System.Threading.Tasks;
 
 namespace MonkeyHubApp.ViewModels
 {
     public class MainViewModel : BaseViewModel
     {
-        private string _searchTerm;
-        public string SearchTerm
-        {
-            get { return _searchTerm; }
-            set
-            {
-                if (SetProperty(ref _searchTerm, value))
-                {
-                    SearhCommand.ChangeCanExecute();
-                }
-            }
-        }
-
-        public ObservableCollection<Tag> Resultados { get; }
-
-        public Command SearhCommand { get; }
-        public Command AboutCommand { get; }
-        public Command<Tag> ShowCategoriaCommand { get; }
-
         private readonly IMonkeyHubApiService _monkeyHubApiService;
+        public ObservableCollection<Tag> Tags { get; }
+
+        public Command AboutCommand { get; }
+
+        public Command SearchCommand { get; }
+
+        public Command<Tag> ShowCategoriaCommand { get; }
 
         public MainViewModel(IMonkeyHubApiService monkeyHubApiService)
         {
             _monkeyHubApiService = monkeyHubApiService;
-
-            SearhCommand = new Command(ExecuteSearchCommand, CanExecuteSearchCommand);
-
-            AboutCommand = new Command(ExecuteAboutCommand);
-
+            Tags = new ObservableCollection<Tag>();
+            //AboutCommand = new Command(ExecuteAboutCommand);
+            //SearchCommand = new Command(ExecuteSearchCommand);
             ShowCategoriaCommand = new Command<Tag>(ExecuteShowCategoriaCommand);
-
-            Resultados = new ObservableCollection<Tag>();
         }
+
+        //private async void ExecuteSearchCommand()
+        //{
+        //    //await PushAsync<SearchViewModel>();
+        //}
 
         private async void ExecuteShowCategoriaCommand(Tag tag)
         {
-            await PushAsync<CategoriaViewModel>(_monkeyHubApiService, tag);
+            await PushAsync<CategoriaViewModel>(tag);
         }
 
-        async void ExecuteAboutCommand()
+        private async void ExecuteAboutCommand()
         {
             await PushAsync<AboutViewModel>();
         }
 
-        async void ExecuteSearchCommand()
+        public async Task LoadAsync()
         {
-            //await Task.Delay(2000);
+            var tags = await _monkeyHubApiService.GetTagsAsync();
 
-            //Forma errada de utilizar o DisplayAlert
-            bool res = await App.Current.MainPage.DisplayAlert("MonkeyHubApp", $"Você pesquisou por '{SearchTerm}'?", "Sim", "Não");
-
-            if (res)
+            Tags.Clear();
+            foreach (var tag in tags)
             {
-                //Forma errada de utilizar o DisplayAlert
-                await App.Current.MainPage.DisplayAlert("MonkeyHubApp", "Obrigado", "Ok");
-
-                var tagsRetornadasDoServico = await _monkeyHubApiService.GetTagsAsync();
-
-                Resultados.Clear();
-
-                if (tagsRetornadasDoServico != null)
-                {
-                    foreach (var tag in tagsRetornadasDoServico)
-                    {
-                        Resultados.Add(tag);
-                    }
-                }
+                Tags.Add(tag);
             }
-            else
-            {
-                //Forma errada de utilizar o DisplayAlert
-                await App.Current.MainPage.DisplayAlert("MonkeyHubApp", "De nada", "Ok");
-            }
-        }
-
-        private bool CanExecuteSearchCommand()
-        {
-            return !string.IsNullOrWhiteSpace(SearchTerm);
         }
     }
 }

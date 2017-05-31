@@ -25,13 +25,13 @@ namespace MonkeyHubApp.ViewModels
             _tag = tag;
 
             Contents = new ObservableCollection<Content>();
-            ShowContentCommand = new Command<Content>(ExecuteShowContentCommand);
+            //ShowContentCommand = new Command<Content>(ExecuteShowContentCommand);
         }
 
-        private async void ExecuteShowContentCommand(Content content)
-        {
-            //await PushAsync<ContentWebViewModel>(content);
-        }
+        //private async void ExecuteShowContentCommand(Content content)
+        //{
+        //    //await PushAsync<ContentWebViewModel>(content);
+        //}
 
         public async Task LoadAsync()
         {

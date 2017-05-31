@@ -3,8 +3,4 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="MonkeyHubApp.CategoriaPage">
 
-    <StackLayout>
-        <Button Text="Remover Item" Style="{StaticResource danger}" />
-        <Button Text="Incluir Item" Style="{StaticResource info}" />
-    </StackLayout>
 </ContentPage>

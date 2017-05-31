@@ -12,15 +12,35 @@ namespace MonkeyHubApp
 {
     public partial class MainPage : ContentPage
     {
+        private MainViewModel ViewModel => BindingContext as MainViewModel;
+
         public MainPage()
         {
             InitializeComponent();
-            BindingContext = new MainViewModel(new MonkeyHubApiService());
+            var monkeyHubApiService = DependencyService.Get<IMonkeyHubApiService>();
+            BindingContext = new MainViewModel(monkeyHubApiService);
 
-            btnNavegar.Clicked += async (sender, e) =>
+            this.lvwTags.ItemSelected += (sender, e) =>
             {
-                await Navigation.PushAsync(new CategoriaPage());
+                ViewModel.ShowCategoriaCommand.Execute(e.SelectedItem);
             };
-        }        
+        }
+
+        protected override async void OnAppearing()
+        {
+            base.OnAppearing();
+
+            if (ViewModel != null)
+                await ViewModel.LoadAsync();
+        }
+
+        //private void ListView_OnItemSelected(object sender, SelectedItemChangedEventArgs e)
+        //{
+        //    if (e.SelectedItem != null)
+        //    {
+        //        ViewModel.ShowCategoriaCommand.Execute(e.SelectedItem);
+        //    }
+        //}
     }
 }
+

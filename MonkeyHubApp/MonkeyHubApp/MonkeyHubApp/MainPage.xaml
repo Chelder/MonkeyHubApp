@@ -3,20 +3,18 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:MonkeyHubApp"
              x:Class="MonkeyHubApp.MainPage"
-             Title="Página Inicial">
+             Title="Categorias">
 
-    <StackLayout>
-        <Label Text="Meu Texto 1" Font="{StaticResource minhaFonte}" TextColor="{StaticResource minhaCor}" />
-        <Label Text="Meu Texto 2" Font="{StaticResource minhaFonte}" TextColor="{StaticResource minhaCor}" />
-        <Label Text="Meu Texto 3" Font="{StaticResource minhaFonte}" TextColor="{StaticResource minhaCor}" />
-        <Label Text="Meu Texto 4" Font="{StaticResource minhaFonte}" TextColor="{StaticResource minhaCor}" />
-
-        <Button Text="Excluir" Style="{StaticResource danger}" />
-        <Button Text="Salvar" Style="{StaticResource info}" />
-
-        <Button Text="Remover Item" Style="{StaticResource danger}" />
-        <Button Text="Incluir Item" Style="{StaticResource info}" />
-
-        <Button x:Name="btnNavegar" Text="Navegar" />
-    </StackLayout>
+    <ListView x:Name="lvwTags" ItemsSource="{Binding Tags}" HasUnevenRows="True">
+        <ListView.ItemTemplate>
+            <DataTemplate>
+                <ViewCell>
+                    <StackLayout Padding="20">
+                        <Label Text="{Binding Name}" TextColor="Black" FontSize="Large" />
+                        <Label Text="{Binding Description}" TextColor="Gray" FontSize="Medium" />
+                    </StackLayout>
+                </ViewCell>
+            </DataTemplate>
+        </ListView.ItemTemplate>
+    </ListView>
 </ContentPage>
